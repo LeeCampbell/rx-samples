@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Concurrency;
 
 namespace RxSamples.ConsoleApp
 {
@@ -79,6 +80,13 @@ namespace RxSamples.ConsoleApp
       //RunExample(() => combine.CombineLatestExample());
       //RunExample(() => combine.ForkJoinExample());
 
+
+      var scheduleExamples = new SchedulingExamples();
+      //RunExample(() => scheduleExamples.Rx_can_still_Deadlock());
+      //RunExample(() => scheduleExamples.Scheduling_on_Immediate_is_sequential());
+      //RunExample(() => scheduleExamples.Scheduling_on_the_CurrentThread_is_dispatched_to_a_Trampoline());
+      //RunExample(() => scheduleExamples.DefaultSchedulingOnObservableCreate());
+      RunExample(() => scheduleExamples.SchedulingOnObservableCreate(Scheduler.ThreadPool, Scheduler.CurrentThread));
     }
 
     public static void RunExample(Expression<Action> expression)

@@ -62,12 +62,14 @@
     <Compile Include="03_LifetimeManagementExamples.cs" />
     <Compile Include="05_CombiningObservableExamples.cs" />
     <Compile Include="ConsoleColor.cs" />
+    <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />
     <Compile Include="04_FlowControlExamples.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="01_SubjectExamples.cs" />
     <Compile Include="02_StaticAndExtensionMethodsExamples.cs" />
+    <Compile Include="SchedulingExamples.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
