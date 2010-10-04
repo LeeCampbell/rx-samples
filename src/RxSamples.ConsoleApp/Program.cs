@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Concurrency;
 
 namespace RxSamples.ConsoleApp
 {
@@ -86,7 +85,22 @@ namespace RxSamples.ConsoleApp
       //RunExample(() => scheduleExamples.Scheduling_on_Immediate_is_sequential());
       //RunExample(() => scheduleExamples.Scheduling_on_the_CurrentThread_is_dispatched_to_a_Trampoline());
       //RunExample(() => scheduleExamples.DefaultSchedulingOnObservableCreate());
-      RunExample(() => scheduleExamples.SchedulingOnObservableCreate(Scheduler.ThreadPool, Scheduler.CurrentThread));
+      //RunExample(() => scheduleExamples.SchedulingOnObservableCreate(Scheduler.ThreadPool, Scheduler.CurrentThread));
+
+      var hotAndCold = new HotAndColdExamples();
+      //RunExample(() => hotAndCold.Subject_is_hot_so_starts_regardless_of_subscription());
+      //RunExample(() => hotAndCold.Interval_is_cold_so_starts_on_subscription_and_does_not_share_stream());
+      //RunExample(() => hotAndCold.Publish_shares_stream_and_Connect_makes_cold_observables_hot());
+      //RunExample(() => hotAndCold.Connections_can_be_disposed_and_reconnected());
+      //RunExample(() => hotAndCold.Connected_publishes_regardless_of_subscribers());
+      //RunExample(() => hotAndCold.RefCount_only_publishes_once_subscribed_to());
+      //RunExample(() => hotAndCold.RefCount_is_a_shared_stream_and_unsubscribes_to_underlying_when_no_more_subscribers());
+      //RunExample(() => hotAndCold.Prune_will_subscribe_and_return_the_last_value_like_AsyncSubject());
+      //RunExample(() => hotAndCold.Replay_wraps_underlying_in_ReplaySubject());
+      //RunExample(() => hotAndCold.ReplayOnHotExample());
+      RunExample(() => hotAndCold.WithoutDeferExample());
+      RunExample(() => hotAndCold.DeferExample2());
+
     }
 
     public static void RunExample(Expression<Action> expression)
@@ -122,7 +136,7 @@ namespace RxSamples.ConsoleApp
       var methodCall = method.Body as MethodCallExpression;
       if (methodCall != null)
       {
-        return methodCall.Method.Name;
+        return methodCall.Method.Name.Replace("_", " ");
       }
       return null;
     }
