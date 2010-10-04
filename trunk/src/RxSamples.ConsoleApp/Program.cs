@@ -19,7 +19,8 @@ namespace RxSamples.ConsoleApp
       //RunExample(() => extMethodExamples.Return_is_like_a_completed_BehaviourSubject());
       //RunExample(() => extMethodExamples.Never_is_like_a_Subject());
       //RunExample(() => extMethodExamples.Throw_is_like_ReplaySubject_that_throws_when_subsribed_to());
-      //RunExample(() => extMethodExamples.BlockingVsNonBlocking());
+      //RunExample(() => extMethodExamples.Blocking_vs_NonBlocking_via_Observable_Create());
+      //RunExample(() => extMethodExamples.Defer_to_make_a_blocking_non_blocking_like_Observable_Create());
       //RunExample(() => extMethodExamples.Range_is_like_Create_that_returns_a_range_of_integers());
       //RunExample(() => extMethodExamples.Inveral_example());
       //RunExample(() => extMethodExamples.Interval_for_evenly_spaced_publications());
@@ -98,9 +99,6 @@ namespace RxSamples.ConsoleApp
       //RunExample(() => hotAndCold.Prune_will_subscribe_and_return_the_last_value_like_AsyncSubject());
       //RunExample(() => hotAndCold.Replay_wraps_underlying_in_ReplaySubject());
       //RunExample(() => hotAndCold.ReplayOnHotExample());
-      RunExample(() => hotAndCold.WithoutDeferExample());
-      RunExample(() => hotAndCold.DeferExample2());
-
     }
 
     public static void RunExample(Expression<Action> expression)
