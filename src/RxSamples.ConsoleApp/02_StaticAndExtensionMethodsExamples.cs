@@ -72,8 +72,7 @@ namespace RxSamples.ConsoleApp
             return () => Console.WriteLine("Observer has unsubscribed");
           });
     }
-
-    public void BlockingVsNonBlocking()
+    public void Blocking_vs_NonBlocking_via_Observable_Create()
     {
       Console.WriteLine("Requesting observable via blocking call @ {0:o}", DateTime.Now);
       var blocked = BlockingMethod();
@@ -84,6 +83,20 @@ namespace RxSamples.ConsoleApp
       var nonblocked = NonBlocking();
       Console.WriteLine("Recieved observable via nonblocking call @ {0:o}", DateTime.Now);
       WriteStreamToConsole(nonblocked, "nonblocked");
+
+    }
+
+    public void Defer_to_make_a_blocking_non_blocking_like_Observable_Create()
+    {
+      Console.WriteLine("Requesting observable via blocking call @ {0:o}", DateTime.Now);
+      var blocked = BlockingMethod();
+      Console.WriteLine("Recieved observable via blocking call @ {0:o}", DateTime.Now);
+      WriteStreamToConsole(blocked, "blocked");
+
+      Console.WriteLine("Requesting observable via defer call @ {0:o}", DateTime.Now);
+      var defer = Observable.Defer<string>(BlockingMethod);
+      Console.WriteLine("Recieved observable via defer call @ {0:o}", DateTime.Now);
+      WriteStreamToConsole(defer, "defer");
 
     }
     #endregion
