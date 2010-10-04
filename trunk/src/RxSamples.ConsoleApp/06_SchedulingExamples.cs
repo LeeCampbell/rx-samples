@@ -18,15 +18,6 @@ namespace RxSamples.ConsoleApp
     //  Scheduler.ThreadPool;
     //}
 
-    public void Rx_can_still_Deadlock()
-    {
-      var stream = new Subject<int>();
-      Console.WriteLine("Next line should dead lock the system.");
-      var value = stream.First();
-      stream.OnNext(1);
-      Console.WriteLine("I can never execute....");
-    }
-
     private static void ScheduleTasks(IScheduler scheduler)
     {
       Action leafAction = () => Console.WriteLine("leafAction.");
@@ -117,6 +108,15 @@ namespace RxSamples.ConsoleApp
         .Subscribe(
           i => Console.WriteLine("Value={0} on thread:{1}", i, Thread.CurrentThread.ManagedThreadId),
           () => Console.WriteLine("Oncomplete on thread:{0}", Thread.CurrentThread.ManagedThreadId));
+    }
+
+    public void Rx_can_still_Deadlock()
+    {
+      var stream = new Subject<int>();
+      Console.WriteLine("Next line should dead lock the system.");
+      var value = stream.First();
+      stream.OnNext(1);
+      Console.WriteLine("I can never execute....");
     }
   }
 }
