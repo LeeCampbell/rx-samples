@@ -218,11 +218,6 @@
             produced by the handler.
             </summary>
         </member>
-        <member name="M:System.Linq.EnumerableEx.Zip``3(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``1,``2})">
-            <summary>
-            Merges two sequences into one sequence by using the selector function.
-            </summary>        
-        </member>
         <member name="M:System.Linq.EnumerableEx.ForkJoin``1(System.Collections.Generic.IEnumerable{System.Collections.Generic.IEnumerable{``0}})">
             <summary>
             Runs all sequences and combines their last values.
