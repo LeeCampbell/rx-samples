@@ -1,0 +1,4 @@
+﻿Note that the Rx Testing dll has references to the Microsoft UnitTesting framework. 
+I believe this is only so that it can internall call the Assert type in 2 methods. 
+This in turn requires that you have System.Web(?!) referenced.
+Now if you wanted to use a good testing framework (nUnit/MBUnit etc) you have got to have reference to MSTest and System.Web for no real reason. Booo.

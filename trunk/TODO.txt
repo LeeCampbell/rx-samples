@@ -1,6 +1,15 @@
-Check into some source control
 Update the FlowControl post (4th) to link to the sandbox. --> Suggest one of the Lab boys create a good sandbox.
 Allow download
 Create .NET 4.0 version
 Upgrade to newest version of RX and recheck in.
 Update any blog posts with breaking changes.
+
+Add Defer to the Blog posts
+CreateWithDisposable can it be done with a FileReader or something like that
+Aggregate
+TestScheduler
+
+IBus with Rx
+Drag Drop
+Polling Twitter
+Faking Price ticks
