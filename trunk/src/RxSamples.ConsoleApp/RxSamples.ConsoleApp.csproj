@@ -61,10 +61,17 @@
       <HintPath>..\..\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="03_LifetimeManagementExamples.cs" />
     <Compile Include="05_CombiningObservableExamples.cs" />
+    <Compile Include="08_TestingRx\IMyService.cs" />
+    <Compile Include="08_TestingRx\ISchedulerService.cs" />
+    <Compile Include="08_TestingRx\IViewModel.cs" />
+    <Compile Include="08_TestingRx\MyPresenter.cs" />
     <Compile Include="ConsoleColor.cs" />
     <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />
@@ -75,7 +82,6 @@
     <Compile Include="01_SubjectExamples.cs" />
     <Compile Include="02_StaticAndExtensionMethodsExamples.cs" />
     <Compile Include="06_SchedulingExamples.cs" />
-    <Compile Include="08_TestingRx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

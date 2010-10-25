@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RxSamples.ConsoleApp4", "src\RxSamples.ConsoleApp\RxSamples.ConsoleApp4.csproj", "{5968817B-025C-49F1-8856-2B31D13D0FD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RxSamples.Testing", "src\RxSamples.Testing\RxSamples.Testing.csproj", "{54AE5D34-EA50-4E81-B17D-3D9B3FAF8EBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RxSamples.Testing4", "src\RxSamples.Testing\RxSamples.Testing4.csproj", "{54AE5D34-EA50-4E81-B17D-3D9B3FAF8EBA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68B9C9CA-D239-4B81-8B01-5F67261A4537}"
 	ProjectSection(SolutionItems) = preProject
