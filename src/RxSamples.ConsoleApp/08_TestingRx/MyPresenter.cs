@@ -1,29 +1,27 @@
 ﻿using System;
-using System.Concurrency;
 using System.Linq;
 
 namespace RxSamples.ConsoleApp.TestingRx
 {
-
     public class MyPresenter
     {
         private readonly IMyService _myService;
         private readonly IViewModel _viewModel;
-        private readonly ISchedulerService _schedulerService;
+        private readonly ISchedulerProvider _schedulerProvider;
 
-        public MyPresenter(IMyService myService, IViewModel viewModel, ISchedulerService schedulerService)
+        public MyPresenter(IMyService myService, IViewModel viewModel, ISchedulerProvider schedulerProvider)
         {
             _myService = myService;
-            _schedulerService = schedulerService;
+            _schedulerProvider = schedulerProvider;
             _viewModel = viewModel;
         }
 
         public void Show(string symbol)
         {
             _myService.PriceStream(symbol)
-                        .SubscribeOn(_schedulerService.ThreadPool)
-                        .ObserveOn(_schedulerService.Dispatcher)
-                        .Timeout(TimeSpan.FromSeconds(10), _schedulerService.ThreadPool)
+                        .SubscribeOn(_schedulerProvider.ThreadPool)
+                        .ObserveOn(_schedulerProvider.Dispatcher)
+                        .Timeout(TimeSpan.FromSeconds(10), _schedulerProvider.ThreadPool)
                         .Subscribe(OnPriceUpdate, ex =>
                                                         {
                                                             if (ex is TimeoutException)
@@ -44,13 +42,13 @@ namespace RxSamples.ConsoleApp.TestingRx
     {
         private readonly IMyService _myService;
         private readonly IViewModel _viewModel;
-        private readonly ISchedulerService _schedulerService;
+        private readonly ISchedulerProvider _schedulerProvider;
         private IDisposable _priceSubscription;
 
-        public MyPresenter_with_disposal(IMyService myService, IViewModel viewModel, ISchedulerService schedulerService)
+        public MyPresenter_with_disposal(IMyService myService, IViewModel viewModel, ISchedulerProvider schedulerProvider)
         {
             _myService = myService;
-            _schedulerService = schedulerService;
+            _schedulerProvider = schedulerProvider;
             _viewModel = viewModel;
         }
 
@@ -63,8 +61,8 @@ namespace RxSamples.ConsoleApp.TestingRx
             }
 
             _priceSubscription = _myService.PriceStream(symbol)
-                 .SubscribeOn(_schedulerService.ThreadPool)
-                 .ObserveOn(_schedulerService.Dispatcher)
+                 .SubscribeOn(_schedulerProvider.ThreadPool)
+                 .ObserveOn(_schedulerProvider.Dispatcher)
                  .Subscribe(OnPriceUpdate);
         }
 

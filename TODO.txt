@@ -1,14 +1,54 @@
 Update the FlowControl post (4th) to link to the sandbox. --> Suggest one of the Lab boys create a good sandbox.
-Allow download
-Create .NET 4.0 version
-Upgrade to newest version of RX and recheck in.
 Update any blog posts with breaking changes.
 
-Add Defer to the Blog posts
+9 Buffer, Window, Join & Group Join
+	Buffer
+	Window
+	Join
+	Group Join
+	-->BufferWithTime
+	-->BufferWitCount
+	-->WindowWithTime
+	-->WindowWithCount
+	-->Join
+	-->CombineLatest?
+	-->Zip?
+
+10 New Testing primitives
+	TestScheduler
+
+11 Control Flow
+	If
+	Case
+	Switch
+	For
+	ForkJoin
+	Finally
+	Using
+	Then?
+	(Catch, Retry, 
+
+
+12 Async
+	GetAwaiter
+	ToAsync
+	FromAsyncPattern
+
+Update the Hot-Cold posts to include MultiCast/Publish with a comparison
+Remoteable?
+Sample?
+Scan?
+Scan0?
+SequenceEqual?
+Start
+StartWith
+ToDictionary
+ToList
+ToLookup
+Synchronize
+Defer?
 CreateWithDisposable can it be done with a FileReader or something like that
 Aggregate
-TestScheduler
-
 IBus with Rx
 Drag Drop
 Polling Twitter
