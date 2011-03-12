@@ -3,7 +3,7 @@ using RxSamples.ConsoleApp.TestingRx;
 
 namespace RxSamples.Testing
 {
-    public sealed class TestSchedulers : ISchedulerService
+    public sealed class TestSchedulers : ISchedulerProvider
     {
         private readonly TestScheduler _currentThread = new TestScheduler();
         private readonly TestScheduler _dispatcher = new TestScheduler();
@@ -11,16 +11,16 @@ namespace RxSamples.Testing
         private readonly TestScheduler _newThread = new TestScheduler();
         private readonly TestScheduler _threadPool = new TestScheduler();
 
-        #region Implementation of ISchedulerService
-        IScheduler ISchedulerService.CurrentThread { get { return _currentThread; } }
+        #region Implementation of ISchedulerProvider
+        IScheduler ISchedulerProvider.CurrentThread { get { return _currentThread; } }
 
-        IScheduler ISchedulerService.Dispatcher { get { return _dispatcher; } }
+        IScheduler ISchedulerProvider.Dispatcher { get { return _dispatcher; } }
 
-        IScheduler ISchedulerService.Immediate { get { return _immediate; } }
+        IScheduler ISchedulerProvider.Immediate { get { return _immediate; } }
 
-        IScheduler ISchedulerService.NewThread { get { return _newThread; } }
+        IScheduler ISchedulerProvider.NewThread { get { return _newThread; } }
 
-        IScheduler ISchedulerService.ThreadPool { get { return _threadPool; } }
+        IScheduler ISchedulerProvider.ThreadPool { get { return _threadPool; } }
         #endregion
 
         public TestScheduler CurrentThread { get { return _currentThread; } }

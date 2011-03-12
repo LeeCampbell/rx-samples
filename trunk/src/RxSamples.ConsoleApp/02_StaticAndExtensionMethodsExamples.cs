@@ -381,15 +381,15 @@ namespace RxSamples.ConsoleApp
                     enumerable.ToList().ForEach(Console.WriteLine);
                 }, () => Console.WriteLine("Completed"));
         }
-
+        
         public void BufferWithTime_will_publish_enumerables_when_the_specified_timespan_elapses()
         {
             var interval = Observable.Interval(TimeSpan.FromMilliseconds(150));
             interval.BufferWithTime(TimeSpan.FromSeconds(1)).Subscribe(
-                enumerable =>
+                buffer=>
                 {
                     Console.WriteLine("--Buffered values");
-                    enumerable.ToList().ForEach(Console.WriteLine);
+                    buffer.Run(Console.WriteLine);
                 }, () => Console.WriteLine("Completed"));
 
         }

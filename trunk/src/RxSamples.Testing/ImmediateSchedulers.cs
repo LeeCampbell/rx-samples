@@ -3,7 +3,7 @@ using RxSamples.ConsoleApp.TestingRx;
 
 namespace RxSamples.Testing
 {
-    public sealed class ImmediateSchedulers : ISchedulerService
+    public sealed class ImmediateSchedulers : ISchedulerProvider
     {
         public IScheduler CurrentThread { get { return Scheduler.Immediate; } }
 

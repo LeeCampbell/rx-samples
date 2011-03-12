@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Net4\System.Interactive.dll</HintPath>
     </Reference>
+    <Reference Include="System.Linq.Async, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Net4\System.Linq.Async.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive, Version=1.0.2677.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Net4\System.Reactive.dll</HintPath>
@@ -59,9 +63,10 @@
     <Compile Include="06_SchedulingExamples.cs" />
     <Compile Include="07_HotAndColdExamples.cs" />
     <Compile Include="08_TestingRx\IMyService.cs" />
-    <Compile Include="08_TestingRx\ISchedulerService.cs" />
+    <Compile Include="08_TestingRx\ISchedulerProvider.cs" />
     <Compile Include="08_TestingRx\IViewModel.cs" />
     <Compile Include="08_TestingRx\MyPresenter.cs" />
+    <Compile Include="09_JoinGroupWindowExamples.cs" />
     <Compile Include="ConsoleColor.cs" />
     <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />

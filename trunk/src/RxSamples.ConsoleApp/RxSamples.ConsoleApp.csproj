@@ -69,9 +69,10 @@
     <Compile Include="03_LifetimeManagementExamples.cs" />
     <Compile Include="05_CombiningObservableExamples.cs" />
     <Compile Include="08_TestingRx\IMyService.cs" />
-    <Compile Include="08_TestingRx\ISchedulerService.cs" />
+    <Compile Include="08_TestingRx\ISchedulerProvider.cs" />
     <Compile Include="08_TestingRx\IViewModel.cs" />
     <Compile Include="08_TestingRx\MyPresenter.cs" />
+    <Compile Include="09_JoinGroupWindowExamples.cs" />
     <Compile Include="ConsoleColor.cs" />
     <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />
