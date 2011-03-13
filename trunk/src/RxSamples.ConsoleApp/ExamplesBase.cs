@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RxSamples.ConsoleApp
 {
@@ -14,6 +16,12 @@ namespace RxSamples.ConsoleApp
         value => Console.WriteLine("{0} : {1}", name, value),
         ex => Console.WriteLine("{0} : {1}", name, ex),
         () => Console.WriteLine("{0} Completed", name));
+    }
+    protected static void WriteListToConsole<T>(IEnumerable<T> list, string name)
+    {
+        list.Run(
+          value => Console.WriteLine("{0} : {1}", name, value),
+          () => Console.WriteLine("{0} Completed", name));
     }
   }
 }
