@@ -71,7 +71,6 @@
   <ItemGroup>
     <Compile Include="08_MyPresenterFixture.cs" />
     <Compile Include="08_TestingSheduling.cs" />
-    <Compile Include="09_JoinGroupWindowTests.cs" />
     <Compile Include="ImmediateSchedulers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestSchedulerExtensions.cs" />
