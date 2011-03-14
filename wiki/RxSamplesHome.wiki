@@ -9,4 +9,4 @@ This hosted project is intended to support the blog series describing the .NET R
 
 The blog series can be found http://leecampbell.blogspot.com/2010/08/reactive-extensions-for-net.html
 
-If you want to download the source as a zip archive then revision 8 is available here : http://rx-samples.googlecode.com/files/rx-samples_v008.zip
+If you want to download the source as a zip archive then revision 9 is available here : http://rx-samples.googlecode.com/files/rx-samples_v009.zip
