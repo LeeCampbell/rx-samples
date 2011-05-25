@@ -53,3 +53,8 @@ IBus with Rx
 Drag Drop
 Polling Twitter
 Faking Price ticks
+
+ManySelect
+Should probably be in the WindowJoinBuffer Greoup
+http://social.msdn.microsoft.com/Forums/is/rx/thread/e70fe8b6-6d9d-486a-a8d0-c1bc66551ded
+
