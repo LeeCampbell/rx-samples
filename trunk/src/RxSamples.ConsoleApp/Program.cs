@@ -103,19 +103,24 @@ namespace RxSamples.ConsoleApp
             //RunExample(() => hotAndCold.AnonQuestion20100917_using_Inteval());
 
             var joinsAndWindows = new JoinGroupWindowExamples();
-            RunExample(() => joinsAndWindows.Buffer_With_Count_returns_IObservable_of_IList_of_T());
-            RunExample(() => joinsAndWindows.Buffer_With_Time_returns_IObservable_of_IList_of_T());
-            RunExample(() => joinsAndWindows.Window_With_Count_returns_IObservable_of_IObservable_of_T());
-            RunExample(() => joinsAndWindows.Window_With_Time_returns_IObservable_of_IObservable_of_T());
-            RunExample(() => joinsAndWindows.MyWindow_With_Time_returns_IObservable_of_IObservable_of_T());
-            RunExample(() => joinsAndWindows.Switch_rolls_Windows_back_into_their_source());
-            RunExample(() => joinsAndWindows.Join_with_no_closing_left());
-            RunExample(() => joinsAndWindows.Join_with_immediate_closing_left());
-            RunExample(() => joinsAndWindows.Join_with_non_overlapping_left_windows());
-            RunExample(() => joinsAndWindows.Join_as_CombineLatest());
-            RunExample(() => joinsAndWindows.Actual_CombineLatest());
-            RunExample(() => joinsAndWindows.GroupJoin_with_no_closing_left());
-            RunExample(() => joinsAndWindows.GroupJoin_with_no_closing_right());
+            //RunExample(() => joinsAndWindows.Buffer_With_Count_returns_IObservable_of_IList_of_T());
+            //RunExample(() => joinsAndWindows.Buffer_With_Time_returns_IObservable_of_IList_of_T());
+            //RunExample(() => joinsAndWindows.Window_With_Count_returns_IObservable_of_IObservable_of_T());
+            //RunExample(() => joinsAndWindows.Window_With_Time_returns_IObservable_of_IObservable_of_T());
+            //RunExample(() => joinsAndWindows.MyWindow_With_Time_returns_IObservable_of_IObservable_of_T());
+            //RunExample(() => joinsAndWindows.Switch_rolls_Windows_back_into_their_source());
+            //RunExample(() => joinsAndWindows.Join_with_no_closing_left());
+            //RunExample(() => joinsAndWindows.Join_with_immediate_closing_left());
+            //RunExample(() => joinsAndWindows.Join_with_non_overlapping_left_windows());
+            //RunExample(() => joinsAndWindows.Join_as_CombineLatest());
+            //RunExample(() => joinsAndWindows.Actual_CombineLatest());
+            //RunExample(() => joinsAndWindows.GroupJoin_with_no_closing_left());
+            //RunExample(() => joinsAndWindows.GroupJoin_with_no_closing_right());
+            //RunExample(() => joinsAndWindows.GarysOverLappingWindows());
+            //RunExample(() => joinsAndWindows.SlightModsToGarysOverLappingWindows());
+            //RunExample(() => joinsAndWindows.My_TWAP_or_VWAP_implementation());
+
+            //GroupExample.Run();
         }
 
         public static void RunExample(Expression<Action> expression)

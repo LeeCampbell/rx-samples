@@ -1,0 +1,19 @@
+﻿<Window x:Class="RxSamples.WpfApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Rx Samples"
+        Height="300" Width="300"
+        Style="{StaticResource DefaultWindowStyle}">
+    <StackPanel>
+        <Button Click="MemberSearchButton_Click">Intellisense - Google suggest</Button>
+        <Expander Header="Image gallery" IsExpanded="True">
+            <StackPanel Margin="20,0,0,0" >
+                <Button Click="GalleryUnReponsiveButton_Click" >Image Gallery (Unresponsive)</Button>
+                <Button Click="GalleryReponsiveButton_Click">Image Gallery (Responsive)</Button>
+                <Button Click="GalleryRxButton_Click">Image Gallery (Responsive Rx)</Button>
+            </StackPanel>
+        </Expander>
+        <Button Click="ChartTWAPButton_Click" >Chart (Averaging windows)</Button>
+        <!--<Button Click="SystemMonitorButton_Click" >System Monitor</Button>-->
+    </StackPanel>
+</Window>

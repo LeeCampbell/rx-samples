@@ -1,0 +1,106 @@
+﻿<Window x:Class="RxSamples.WpfApplication.Examples.TwapChart.TwapWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+        Title="VWAPWindow" 
+        WindowState="Maximized"
+        Style="{StaticResource DefaultWindowStyle}">
+    <Control.Resources>
+        <!--  charting:LineSeries  -->
+        <Style TargetType="charting:LineSeries">
+            <Setter Property="AnimationSequence" Value="Simultaneous"/>
+            <Setter Property="IsSelectionEnabled" Value="False"/>
+            <Setter Property="TransitionDuration" Value="0"/>
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="PolylineStyle">
+                <Setter.Value>
+                    <Style TargetType="Polyline">
+                        <Setter Property="StrokeThickness" Value="1" />
+                        <Setter Property="StrokeMiterLimit" Value="1" />
+                        <Setter Property="Stroke" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type charting:LineSeries}}, Path=Background}"/>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="DataPointStyle">
+                <Setter.Value>
+                    <Style TargetType="charting:LineDataPoint">
+                        <Setter Property="BorderBrush" Value="Gray" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="IsTabStop" Value="False" />
+                        <Setter Property="Width" Value="5" />
+                        <Setter Property="Height" Value="5" />
+                        <Setter Property="DependentValueStringFormat" Value="{}{0:c}" />
+                        <Setter Property="IndependentValueStringFormat" Value="{}{0:d}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="charting:LineDataPoint">
+                                    <Ellipse Fill="{TemplateBinding Background}" 
+                                             Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}"
+                                             SnapsToDevicePixels="False">
+                                        <ToolTipService.ToolTip>
+                                            <WrapPanel>
+                                                <TextBlock Text="{TemplateBinding FormattedDependentValue}"/>
+                                                <TextBlock Text=" @ "/>
+                                                <TextBlock Text="{TemplateBinding FormattedIndependentValue}"/>
+                                            </WrapPanel>
+                                        </ToolTipService.ToolTip>
+                                    </Ellipse>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="charting:LineSeries">
+                        <Canvas x:Name="PlotArea">
+                            <Polyline Points="{TemplateBinding Points}" 
+                                      Style="{TemplateBinding PolylineStyle}" />
+                        </Canvas>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="LegendItemStyle">
+                <Setter.Value>
+                    <Style TargetType="charting:LegendItem">
+                        <Setter Property="IsTabStop" Value="False" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="charting:LegendItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Width="8"
+                                                   Height="8"
+                                                   Fill="{Binding Background, BindsDirectlyToSource=true}"
+                                                   Stroke="{Binding BorderBrush}"
+                                                   StrokeThickness="1"
+                                                   Margin="0,0,3,0" />
+                                        <datavis:Title Content="{TemplateBinding Content}" />
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Control.Resources>
+    <Grid>
+        <charting:Chart Name="chart1">
+            <charting:LineSeries Title="High"
+                                 DependentValuePath="Value"
+                                 IndependentValuePath="Date" 
+                                 ItemsSource="{Binding High}"/>
+            <charting:LineSeries Title="Low"
+                                 DependentValuePath="Value"
+                                 IndependentValuePath="Date" 
+                                 ItemsSource="{Binding Low}"/>
+            <charting:LineSeries Title="TWAP"
+                                 DependentValuePath="Value"
+                                 IndependentValuePath="Date" 
+                                 ItemsSource="{Binding Twap}"/>
+
+        </charting:Chart>
+    </Grid>
+</Window>

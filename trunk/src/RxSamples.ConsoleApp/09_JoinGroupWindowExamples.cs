@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Concurrency;
 using System.Disposables;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace RxSamples.ConsoleApp
 {
@@ -253,5 +255,230 @@ namespace RxSamples.ConsoleApp
                 () => Console.WriteLine("Completed"));
         }
 
+        public void GarysOverLappingWindows()
+        {
+            var obs = Observable.Interval(TimeSpan.FromMilliseconds(200))
+                                .Select(i => i * 100).Take(12);
+            Func<long, IObservable<bool>> windowClosings =
+                i => Observable.Interval(TimeSpan.FromMilliseconds(600))
+                    .Select(_ => true);
+            var movingWindowWithTime = obs.Window(obs, windowClosings);
+            movingWindowWithTime.Select(s => s.ToList()).Subscribe(
+                i => i.Subscribe(j =>
+                {
+                    foreach (var value in j) Console.Write("{0} ", value);
+                }, () => Console.WriteLine()));
+        }
+public void SlightModsToGarysOverLappingWindows()
+{
+    var obs = Observable.Interval(TimeSpan.FromMilliseconds(200))
+        .Select(i => i * 100)
+        .Take(12);
+
+    obs.Window(obs, i => Observable.Timer(TimeSpan.FromMilliseconds(600)))
+        .Select(s => s.ToList())
+        .Merge()
+        .Subscribe(
+            j =>
+            {
+                foreach (var value in j) Console.Write("{0} ", value);
+                Console.WriteLine();
+            });
+}
+
+        public void My_TWAP_or_VWAP_implementation()
+        {
+            /*
+             * Create a stream that produces some values. 
+             * Take overlapping windows and return the mean/average from each of the windows.
+             * To use this for TWAP you will just return the prices from the resultSelector
+             * To use this for VWAP you will just return the value (price * volume) from the resultSelector. This is not showen here.
+             *  *TWAP is Time Weighted Average Price. ie You take all of the prices that happened 
+             *    in a given time period and the TWAP is the average.
+             *  *VWAP is Volume Weighted Average Price. ie You take all the Trades that happened 
+             *    in a given time period and the VWAP is the average of the trade value 
+             *    (trade volume * price for the trade). Eg a Trade to by 1,000 shares @ $1.3 has 
+             *    a value of $1,300
+Source |---1-1-3-6-2-335----7-------4221| Count  Sum    Mean  
+Window0 ---1-1-3-6|                       4      11     2.75
+Window1  --1-1-3-6-|                      4      11     2.75
+Window2   -1-1-3-6-2|                     5      13     2.6
+etc...     1-1-3-6-2-|                    5      13     2.6
+            -1-3-6-2-3|                   5      15     3
+             1-3-6-2-33|                  6      18     3
+              -3-6-2-335|                 6      22     3.667
+               3-6-2-335-|                6      22     3.667
+                -6-2-335--|               5      19     3.8
+                 6-2-335---|              5      19     3.8
+                  -2-335----|             4      13     3.25
+                   2-335----7|            5      20     4
+                    -335----7-|           4      18     4.5
+                     335----7--|          4      18     4.5
+                      35----7---|         3      15     5
+                       5----7----|        2      12     6
+                        ----7-----|       1      7      7
+                         ---7------|      1      7      7
+                          --7-------|     1      7      7
+                           -7-------4|    2      11     5.5
+                            7-------42|   3      13     4.33
+                             -------422|  3      8      2.67
+                              ------4221| 4      9      2.25
+                               -----4221| 4      9      2.25
+                                ----4221| 4      9      2.25
+                                 ---4221| 4      9      2.25
+                                  --4221| 4      9      2.25
+                                   -4221| 4      9      2.25
+                                    4221| 4      9      2.25
+                                     221| 3      5      1.667
+                                      21| 2      3      1.5
+                                       1| 1      1      1 
+            */
+            var values = new List<int?> { null, null, null, 1, null, 1, null, 3, null, 6, null, 2, null, 3, 3, 5, null, null, null, null, 7, null, null, null, null, null, null, null, 4, 2, 2, 1 };
+            var valueStream = Observable.Interval(TimeSpan.FromMilliseconds(100))
+                                                            .Select(i => (int)(i))
+                                                            .Select(idx => values[idx])
+                                                            .Take(values.Count)
+                                                            .Where(value => value.HasValue)
+                                                            .Select(value => value.Value);
+
+            var twap = OverlappingWindowAverage_InitialAttempt(valueStream, TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(100), i => i);
+            //var twap = OverlappingWindowAverage_Debug(valueStream, TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(100), i => i);
+            //var twap = OverlappingWindowAverage(valueStream, TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(100), i => i);
+            WriteStreamToConsole(twap, "TWAP");
+
+        }
+
+public IObservable<string> OverlappingWindowAverage_Debug<T>
+(
+    IObservable<T> source,
+    TimeSpan windowPeriod,
+    TimeSpan accuracy,
+    Func<T, Decimal> resultSelector
+)
+{
+    //We will subscribe twice to this so Publish and refcount to ensure we share the stream.
+    var inputIdx = 0;
+    var receivedIdx = 0;
+    var sourcePublished = source.Publish().RefCount().Select(value => new { Idx = inputIdx++, Value = value });
+
+    var ticks =
+        //Open a new window every period defined by the accuracy argument
+                        Observable.Interval(accuracy)
+        //Stop ticking if the source completes
+                                .TakeUntil(sourcePublished.IgnoreValues().Materialize());
+
+    return sourcePublished.Window
+        (
+            ticks,
+        //Close window after windowPeriod
+            windowOpening => Observable.Timer(windowPeriod)
+        )
+        //Average the values and return the single result as an IObservable<Decimal>
+        .Select(windowValues =>
+                    {
+                        var idx = receivedIdx++;
+                        return windowValues.Select(pair => resultSelector(pair.Value))
+                            .Average()
+                            //Empty windows will throw InvalidOperationException from a call to Average
+                            .Catch((InvalidOperationException ex) =>
+                                        {
+                                            Console.WriteLine(
+                                                "  Ignoring empty stream for average {0}", ex);
+                                            return Observable.Empty<Decimal>();
+                                        })
+                            .Replay().RefCount()
+                            .Select(avg => string.Format("{0} {1}", idx, avg));
+                    }
+        )
+        //At this point in time I will have an IObservable<IObservable<decimal>>
+        //     ie each of the averages will be in their own child IObservable
+
+        //Merge all of the Average child IObservable in to a flattened IObservable
+        //.Merge();
+        .Concat();   // just pumps the first value then get's its nickers in a twist /deadlock
+    //.Merge(1);      //same as Concat()
+    //.Switch();      //Junk??!
+    //.Serialize();
+}
+
+public IObservable<decimal> OverlappingWindowAverage_InitialAttempt<T>
+(
+    IObservable<T> source,
+    TimeSpan windowPeriod,
+    TimeSpan accuracy,
+    Func<T, Decimal> resultSelector
+)
+{
+    //We will subscribe twice to this so Publish and refcount to ensure we share the stream.
+    var sourcePublished = source.Publish().RefCount();
+
+    var ticks =
+        //Open a new window every period defined by the accuracy argument
+                        Observable.Interval(accuracy)
+        //Stop ticking if the source completes
+                                .TakeUntil(sourcePublished.IgnoreValues().Materialize());
+
+    return sourcePublished.Window
+        (
+            ticks,
+        //Close window after windowPeriod
+            windowOpening => Observable.Timer(windowPeriod)
+        )
+        //Average the values and return the single result as an IObservable<Decimal>
+        .Select(windowValues =>
+        {
+            return windowValues.Select(resultSelector)
+                .Average()
+                //Empty windows will throw InvalidOperationException from a call to Average
+                .Catch((InvalidOperationException ex) =>
+                {
+                   //Ignoring empty stream for average
+                    return Observable.Empty<Decimal>();
+                });
+        }
+        )
+        //At this point in time I will have an IObservable<IObservable<decimal>>
+        //     ie each of the averages will be in their own child IObservable
+
+        //Merge all of the Average child IObservable in to a flattened IObservable
+        .Merge();
+}
+
+    }
+
+    public static class Extensions
+    {
+        public static IObservable<T> Serialize<T>(this IObservable<IObservable<T>> source)
+        {
+            return Observable.CreateWithDisposable<T>(o =>
+            {
+                var outerScheduler = new EventLoopScheduler("IObservable Serialize thread for outer");
+                var queue = new BlockingCollection<IObservable<T>>();
+
+                var resources = new CompositeDisposable(outerScheduler, queue);
+
+                resources.Add(outerScheduler.Schedule(() =>
+                {
+                    var streams = queue.GetConsumingEnumerable();
+                    foreach (var stream in streams)
+                    {
+                        //This is almost right. However this seems to only yeild when it completes. I need it pumps as soon as values arrive too.
+                        stream.Run(value => o.OnNext(value), ex => o.OnError(ex));
+                    }
+                    o.OnCompleted();
+                }));
+
+                resources.Add(source.Subscribe(stream =>
+                {
+                    var replay = stream.Replay();
+                    resources.Add(replay.Connect());
+                    queue.Add(replay);
+                },
+                ex => queue.CompleteAdding(),
+                () => queue.CompleteAdding()));
+
+                return resources;
+            });
+        }
     }
 }

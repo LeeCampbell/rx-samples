@@ -1,0 +1,15 @@
+﻿<Application x:Class="RxSamples.WpfApplication.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"     
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!--Each time you create a Window fiel you are actually inheriting from Window so are creating a new type. 
+            WPF does not have the ability to Apply styles to all
+            types the inherit from a base class (that I know of).
+        -->
+        <Style x:Key="DefaultWindowStyle" TargetType="{x:Type Window}" BasedOn="{StaticResource {x:Type Window}}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Icon" Value="/VoltaIcon.ico"/>
+        </Style>
+    </Application.Resources>
+</Application>
