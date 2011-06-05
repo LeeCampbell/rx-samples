@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace RxSamples.ConsoleApp
 {
@@ -105,7 +104,7 @@ namespace RxSamples.ConsoleApp
     public void Run_subscribes_to_all_values_and_blocks()
     {
       var stream = Observable.Interval(TimeSpan.FromMilliseconds(200)).Take(10);
-      stream.Run(value=>Console.WriteLine(value), ()=>Console.WriteLine("Completed"));
+      stream.ForEach(value=>Console.WriteLine(value), ()=>Console.WriteLine("Completed"));
       /*Can be refactored to just use the method group as per below*/
       //stream.Run(Console.WriteLine);
     }
