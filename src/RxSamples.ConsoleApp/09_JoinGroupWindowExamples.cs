@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Concurrency;
-using System.Disposables;
-using System.Linq;
-using System.Text;
+using System.Reactive;
+using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 
 namespace RxSamples.ConsoleApp
@@ -16,7 +17,7 @@ namespace RxSamples.ConsoleApp
             var bufferIdx = 0;
             Observable
                 .Interval(TimeSpan.FromMilliseconds(200)).Take(10)
-                .BufferWithCount(3)
+                .Buffer(3)
                 .Subscribe(buffer =>
                 {
                     var thisBufferIdx = bufferIdx++;
@@ -31,7 +32,7 @@ namespace RxSamples.ConsoleApp
             var bufferIdx = 0;
             Observable
                 .Interval(TimeSpan.FromMilliseconds(200)).Take(10)
-                .BufferWithTime(TimeSpan.FromMilliseconds(500))
+                .Buffer(TimeSpan.FromMilliseconds(500))
                 .Subscribe(window =>
                 {
                     var thisBufferIdx = bufferIdx++;
@@ -47,7 +48,7 @@ namespace RxSamples.ConsoleApp
             var windowIdx = 0;
             Observable
                 .Interval(TimeSpan.FromMilliseconds(200)).Take(10)
-                .WindowWithCount(3)
+                .Window(3)
                 .Subscribe(window =>
                                {
                                    var thisWindowIdx = windowIdx++;
@@ -62,7 +63,7 @@ namespace RxSamples.ConsoleApp
             var windowIdx = 0;
             Observable
                 .Interval(TimeSpan.FromMilliseconds(200)).Take(10)
-                .WindowWithTime(TimeSpan.FromMilliseconds(500))
+                .Window(TimeSpan.FromMilliseconds(500))
                 .Subscribe(window =>
                                {
                                    var thisWindowIdx = windowIdx++;
@@ -78,7 +79,7 @@ namespace RxSamples.ConsoleApp
             //is the same as Observable.Interval(TimeSpan.FromMilliseconds(200)).Take(10)
             var switchedWindow = Observable
                 .Interval(TimeSpan.FromMilliseconds(200)).Take(10)
-                .WindowWithTime(TimeSpan.FromMilliseconds(500))
+                .Window(TimeSpan.FromMilliseconds(500))
                 .Switch();
 
             WriteStreamToConsole(switchedWindow, "Switched window");
@@ -91,8 +92,8 @@ namespace RxSamples.ConsoleApp
             var joinedStream = left
                 .Join(
                     right,
-                    _ => Observable.Never<Unit>(),
-                    _ => Observable.Empty<Unit>(),
+                    _ => Observable.Never<System.Reactive.Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
                     (leftValue, rightValue) => new { Left = leftValue, Right = rightValue, Time = DateTime.Now.ToString("o") });
             WriteStreamToConsole(joinedStream, "Join");
 
@@ -104,8 +105,8 @@ namespace RxSamples.ConsoleApp
             var joinedStream = left
                 .Join(
                     right,
-                    _ => Observable.Empty<Unit>(),
-                    _ => Observable.Empty<Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
                     (leftValue, rightValue) => new { Left = leftValue, Right = rightValue, Time = DateTime.Now.ToString("o") });
             WriteStreamToConsole(joinedStream, "Join");
         }
@@ -118,7 +119,7 @@ namespace RxSamples.ConsoleApp
                 .Join(
                     right,
                     _ => left,
-                    _ => Observable.Empty<Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
                     (leftValue, rightValue) => new { Left = leftValue, Right = rightValue, Time = DateTime.Now.ToString("o") });
             WriteStreamToConsole(joinedStream, "Join");
         }
@@ -156,8 +157,8 @@ namespace RxSamples.ConsoleApp
             var joinedStream = left
                 .GroupJoin(
                     right,
-                    _ => Observable.Never<Unit>(),
-                    _ => Observable.Empty<Unit>(),
+                    _ => Observable.Never<System.Reactive.Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
                     (leftValue, rightValues) =>
                     {
                         WriteStreamToConsole(rightValues, string.Format("Window{0}'s values", leftValue));
@@ -172,8 +173,8 @@ namespace RxSamples.ConsoleApp
             var joinedStream = left
                 .GroupJoin(
                     right,
-                    _ => Observable.Empty<Unit>(),
-                    _ => Observable.Never<Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
+                    _ => Observable.Never<System.Reactive.Unit>(),
                     (leftValue, rightValues) =>
                     {
                         WriteStreamToConsole(rightValues, string.Format("Window{0}'s values", leftValue));
@@ -207,8 +208,8 @@ namespace RxSamples.ConsoleApp
             var joinedStream = MyJoin(
                     left,
                     right,
-                    _ => Observable.Never<Unit>(),
-                    _ => Observable.Empty<Unit>(),
+                    _ => Observable.Never<System.Reactive.Unit>(),
+                    _ => Observable.Empty<System.Reactive.Unit>(),
                     (leftValue, rightValue) => new { Left = leftValue, Right = rightValue, Time = DateTime.Now.ToString("o") });
             WriteStreamToConsole(joinedStream, "MyJoin");
 
@@ -217,7 +218,7 @@ namespace RxSamples.ConsoleApp
 
         private IObservable<IObservable<T>> MyWindowWithTime<T>(IObservable<T> source, TimeSpan windowPeriod)
         {
-            return Observable.CreateWithDisposable<IObservable<T>>(o =>
+            return Observable.Create<IObservable<T>>(o =>
                 {
                     var windower = new Subject<long>();
                     var intervals = Observable.Concat(
@@ -232,7 +233,7 @@ namespace RxSamples.ConsoleApp
                             windower,
                             source.Do(_ => { }, windower.OnCompleted),
                             _ => windower,
-                            _ => Observable.Empty<Unit>(),
+                            _ => Observable.Empty<System.Reactive.Unit>(),
                             (left, sourceValues) => sourceValues
                         )
                         .Subscribe(o);
@@ -365,7 +366,7 @@ public IObservable<string> OverlappingWindowAverage_Debug<T>
         //Open a new window every period defined by the accuracy argument
                         Observable.Interval(accuracy)
         //Stop ticking if the source completes
-                                .TakeUntil(sourcePublished.IgnoreValues().Materialize());
+                                .TakeUntil(sourcePublished.IgnoreElements().Materialize());
 
     return sourcePublished.Window
         (
@@ -416,7 +417,7 @@ public IObservable<decimal> OverlappingWindowAverage_InitialAttempt<T>
         //Open a new window every period defined by the accuracy argument
                         Observable.Interval(accuracy)
         //Stop ticking if the source completes
-                                .TakeUntil(sourcePublished.IgnoreValues().Materialize());
+                                .TakeUntil(sourcePublished.IgnoreElements().Materialize());
 
     return sourcePublished.Window
         (
@@ -450,9 +451,9 @@ public IObservable<decimal> OverlappingWindowAverage_InitialAttempt<T>
     {
         public static IObservable<T> Serialize<T>(this IObservable<IObservable<T>> source)
         {
-            return Observable.CreateWithDisposable<T>(o =>
+            return Observable.Create<T>(o =>
             {
-                var outerScheduler = new EventLoopScheduler("IObservable Serialize thread for outer");
+                var outerScheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = "IObservable Serialize thread for outer" });
                 var queue = new BlockingCollection<IObservable<T>>();
 
                 var resources = new CompositeDisposable(outerScheduler, queue);
@@ -463,7 +464,7 @@ public IObservable<decimal> OverlappingWindowAverage_InitialAttempt<T>
                     foreach (var stream in streams)
                     {
                         //This is almost right. However this seems to only yeild when it completes. I need it pumps as soon as values arrive too.
-                        stream.Run(value => o.OnNext(value), ex => o.OnError(ex));
+                        stream.ForEach(value => o.OnNext(value), ex => o.OnError(ex));
                     }
                     o.OnCompleted();
                 }));

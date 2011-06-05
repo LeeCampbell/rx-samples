@@ -1,4 +1,4 @@
-﻿using System.Concurrency;
+﻿using System.Reactive.Concurrency;
 
 namespace RxSamples.ConsoleApp.TestingRx
 {

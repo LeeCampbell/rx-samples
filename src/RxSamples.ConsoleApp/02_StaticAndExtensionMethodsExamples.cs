@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Disposables;
 using System.Linq;
-using System.Text;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
+
 // ReSharper disable InconsistentNaming
 namespace RxSamples.ConsoleApp
 {
@@ -374,7 +375,7 @@ namespace RxSamples.ConsoleApp
         public void BufferWithCount_will_publish_enumerables_when_the_specified_number_of_values_is_published()
         {
             var range = Observable.Range(10, 15);
-            range.BufferWithCount(4).Subscribe(
+            range.Buffer(4).Subscribe(
                 enumerable =>
                 {
                     Console.WriteLine("--Buffered values");
@@ -385,7 +386,7 @@ namespace RxSamples.ConsoleApp
         public void BufferWithTime_will_publish_enumerables_when_the_specified_timespan_elapses()
         {
             var interval = Observable.Interval(TimeSpan.FromMilliseconds(150));
-            interval.BufferWithTime(TimeSpan.FromSeconds(1)).Subscribe(
+            interval.Buffer(TimeSpan.FromSeconds(1)).Subscribe(
                 buffer=>
                 {
                     Console.WriteLine("--Buffered values");

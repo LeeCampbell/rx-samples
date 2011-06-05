@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace RxSamples.ConsoleApp
 {
@@ -295,7 +297,12 @@ namespace RxSamples.ConsoleApp
       //Generate values a,b,c,d,e
       var stream2 = Observable.Interval(TimeSpan.FromMilliseconds(150)).Take(5).Select(i => Char.ConvertFromUtf32((int)i + 97));
       stream1
-          .ForkJoin(stream2, (s1, s2) => new { Left = s1, Right = s2 })
+          
+          //.ForkJoin(stream2, (s1, s2) => new { Left = s1, Right = s2 })
+
+          .CombineLatest(stream2, (s1, s2) => new { Left = s1, Right = s2 })
+          .TakeLast(1)
+
           .Subscribe(Console.WriteLine);
       Console.ReadLine();
       /*

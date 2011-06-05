@@ -70,6 +70,7 @@
     <Compile Include="ConsoleColor.cs" />
     <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />
+    <Compile Include="ObservableExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

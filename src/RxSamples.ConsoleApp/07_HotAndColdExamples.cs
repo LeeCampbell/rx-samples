@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Concurrency;
-using System.Disposables;
-using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 
 namespace RxSamples.ConsoleApp
@@ -300,7 +299,7 @@ namespace RxSamples.ConsoleApp
 
         public void AnonQuestion20100917()
         {
-            var s = Observable.CreateWithDisposable<int>(
+            var s = Observable.Create<int>(
             observer =>
             {
                 for (int i = 0; i < 100; i++)
