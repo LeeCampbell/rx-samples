@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -83,11 +83,12 @@ namespace RxSamples.WpfApplication.Examples.Gallery
             var dispatcher = Dispatcher.CurrentDispatcher;
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                images.Run(imagePath =>
+                foreach (var imagePath in images)
                 {
-                    Action addImage = () => Images.Add(imagePath);
+                    string path = imagePath;
+                    Action addImage = () => Images.Add(path);
                     dispatcher.Invoke(addImage);
-                });
+                }
                 Action completed = () => IsLoading = false;
                 dispatcher.Invoke(completed);
             });

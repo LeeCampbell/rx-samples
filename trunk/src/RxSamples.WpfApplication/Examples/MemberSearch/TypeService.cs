@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 
 namespace RxSamples.WpfApplication.Examples.MemberSearch
@@ -13,7 +14,7 @@ namespace RxSamples.WpfApplication.Examples.MemberSearch
     {
         public IObservable<string> ListMethods(string search)
         {
-            return Observable.CreateWithDisposable<string>(
+            return Observable.Create<string>(
                 observer =>
                     {
                         Thread.Sleep(TimeSpan.FromSeconds(1));

@@ -390,7 +390,10 @@ namespace RxSamples.ConsoleApp
                 buffer=>
                 {
                     Console.WriteLine("--Buffered values");
-                    buffer.Run(Console.WriteLine);
+                    foreach (var value in buffer)
+                    {
+                        Console.WriteLine(value);
+                    }
                 }, () => Console.WriteLine("Completed"));
 
         }

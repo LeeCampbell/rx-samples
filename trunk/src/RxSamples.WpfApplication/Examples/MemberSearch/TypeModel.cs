@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Concurrency;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 
 namespace RxSamples.WpfApplication.Examples.MemberSearch
 {
@@ -18,7 +18,12 @@ namespace RxSamples.WpfApplication.Examples.MemberSearch
         {
             _typeService = typeService;
 
-            var propChanged = Observable.FromEvent<PropertyChangedEventArgs>(this, "PropertyChanged");
+            var propChanged = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                handler => new PropertyChangedEventHandler(handler),
+                h => this.PropertyChanged += h,
+                h => this.PropertyChanged -= h);
+
+
             propChanged
                 .Select(ev => ev.EventArgs.PropertyName)
                 .Where(propertyName => propertyName == "SearchText")

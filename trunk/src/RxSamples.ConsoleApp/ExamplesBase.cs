@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RxSamples.ConsoleApp
 {
@@ -19,9 +18,11 @@ namespace RxSamples.ConsoleApp
     }
     protected static void WriteListToConsole<T>(IEnumerable<T> list, string name)
     {
-        list.Run(
-          value => Console.WriteLine("{0} : {1}", name, value),
-          () => Console.WriteLine("{0} Completed", name));
+        foreach (var item in list)
+        {
+            Console.WriteLine("{0} : {1}", name, item);
+        }
+        Console.WriteLine("{0} Completed", name);
     }
   }
 }
