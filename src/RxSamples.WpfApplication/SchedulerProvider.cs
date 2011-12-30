@@ -1,4 +1,4 @@
-﻿using System.Concurrency;
+﻿using System.Reactive.Concurrency;
 
 namespace RxSamples.WpfApplication
 {
@@ -23,7 +23,8 @@ namespace RxSamples.WpfApplication
 
         public IScheduler Dispatcher
         {
-            get { return Scheduler.Dispatcher; }
+            //get { return Scheduler.Dispatcher; }
+            get { return DispatcherScheduler.Instance; }
         }
 
         public IScheduler Immediate

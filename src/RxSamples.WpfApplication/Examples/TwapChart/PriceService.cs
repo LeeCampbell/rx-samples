@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 
 namespace RxSamples.WpfApplication.Examples.TwapChart
 {
@@ -24,20 +25,20 @@ namespace RxSamples.WpfApplication.Examples.TwapChart
         private readonly IObservable<Price> _close;
 
         //<TICKER>,<DATE>,<TIME>,<OPEN>,<LOW>,<HIGH>,<CLOSE>
-        private const int TickerIdx =0;
-        private const int DateIdx =1;
-        private const int TimeIdx =2;
-        private const int OpenIdx=3;
-        private const int LowIdx=4;
-        private const int HighIdx=5;
-        private const int CloseIdx=6;
+        private const int TickerIdx = 0;
+        private const int DateIdx = 1;
+        private const int TimeIdx = 2;
+        private const int OpenIdx = 3;
+        private const int LowIdx = 4;
+        private const int HighIdx = 5;
+        private const int CloseIdx = 6;
 
         public PriceService()
         {
             //Linq over IEnumerable
             var tableData = File.ReadAllLines(@"Examples\TWAPChart\XAUAUD_day.csv")
                 .Skip(1)                        //Skip the Header row.
-                .Select(line=> line.Split(',')) //Return the row as a comma delimited array 
+                .Select(line => line.Split(',')) //Return the row as a comma delimited array 
                 .Repeat();                      //Make this data repeat forever
 
             //Linq over IObservable with some IEnumerable

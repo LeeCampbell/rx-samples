@@ -32,8 +32,8 @@ namespace RxSamples.WpfApplication.Tests
 
             //Act
             var sut = new RxPhotoGalleryViewModel(_imageSrvMock.Object, _testSchedulderProvider);
-            _testSchedulderProvider.ThreadPool.Run();
-            _testSchedulderProvider.Dispatcher.Run();
+            _testSchedulderProvider.ThreadPool.Start();
+            _testSchedulderProvider.Dispatcher.Start();
 
             //Assert
             CollectionAssert.AreEqual(_expectedImages, sut.Images);
@@ -62,8 +62,8 @@ namespace RxSamples.WpfApplication.Tests
 
             //Act
             var sut = new RxPhotoGalleryViewModel(_imageSrvMock.Object, _testSchedulderProvider);
-            _testSchedulderProvider.ThreadPool.Run();
-            _testSchedulderProvider.Dispatcher.Run();
+            _testSchedulderProvider.ThreadPool.Start();
+            _testSchedulderProvider.Dispatcher.Start();
 
             //Assert
             Assert.IsFalse(sut.IsLoading);

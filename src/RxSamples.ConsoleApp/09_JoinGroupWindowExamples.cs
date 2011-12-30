@@ -464,8 +464,17 @@ public IObservable<decimal> OverlappingWindowAverage_InitialAttempt<T>
                     foreach (var stream in streams)
                     {
                         //This is almost right. However this seems to only yeild when it completes. I need it pumps as soon as values arrive too.
-                        stream.ForEach(value => o.OnNext(value), ex => o.OnError(ex));
+                        try
+                        {
+                            stream.ForEach(o.OnNext);
+                        }
+                        catch (Exception ex)
+                        {
+                            o.OnError(ex);
+                            break;
+                        }
                     }
+                    //TODO: Should not oncomplete if I have OnErrored.
                     o.OnCompleted();
                 }));
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Reactive.Linq;
 
 namespace RxSamples.WpfApplication.Examples.TwapChart
 {
@@ -30,7 +30,7 @@ namespace RxSamples.WpfApplication.Examples.TwapChart
                 //Open a new window every period defined by the accuracy argument
                 Observable.Interval(accuracy)
                     //Stop ticking if the source completes
-                    .TakeUntil(sourcePublished.IgnoreValues().Materialize());
+                    .TakeUntil(sourcePublished.IgnoreElements().Materialize());
 
             return sourcePublished.Window
                 (
