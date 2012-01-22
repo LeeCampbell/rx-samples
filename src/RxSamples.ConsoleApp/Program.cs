@@ -10,19 +10,130 @@ namespace RxSamples.ConsoleApp
             /* Uncomment the calls to the samples you wan to see run*/
             var intro = new SubjectExamples();
             //RunExample(() => intro.SubjectExample());
+            //RunExample(() => intro.SubjectInvalidUsageExample());
             //RunExample(() => intro.ReplaySubjectExample());
-            //RunExample(() => intro.AsyncSubjectExample());
+            //RunExample(() => intro.ReplaySubjectBufferExample());
+            //RunExample(() => intro.ReplaySubjectWindowExample());
+            //RunExample(() => intro.ReplaySubjectInvalidUsageExample());
             //RunExample(() => intro.BehaviorSubjectExample());
+            //RunExample(() => intro.BehaviorSubjectExample2());
+            //RunExample(() => intro.BehaviorSubjectCompletedExample());
+            //RunExample(() => intro.AsyncSubjectExample());
 
             var extMethodExamples = new StaticAndExtensionMethodsExamples();
             //RunExample(() => extMethodExamples.Empty_is_like_an_empty_completed_ReplaySubject());
-            //RunExample(() => extMethodExamples.Return_is_like_a_completed_BehaviourSubject());
+            //RunExample(() => extMethodExamples.Return_is_like_a_completed_replay_one_subject());
             //RunExample(() => extMethodExamples.Never_is_like_a_Subject());
             //RunExample(() => extMethodExamples.Throw_is_like_ReplaySubject_that_throws_when_subsribed_to());
-            //RunExample(() => extMethodExamples.Blocking_vs_NonBlocking_via_Observable_Create());
+
+
+            var lifetimeExample = new LifetimeManagementExamples();
+            //RunExample(() => lifetimeExample.Dispose_of_a_subscription_to_unsubscribe());
+            //RunExample(() => lifetimeExample.SEH_is_not_valid_for_Rx());
+            //RunExample(() => lifetimeExample.Handling_OnError());
+            //RunExample(() => lifetimeExample.No_GC_of_subscriptions());
+            //RunExample(() => lifetimeExample.Multiple_subscriptions_to_the_same_interval_are_actually_independent_streams());
+            //RunExample(() => lifetimeExample.OnCompleted_signifies_the_end_of_a_stream_and_OnNext_is_ignored());
+            //RunExample(() => lifetimeExample.OnError_signifies_the_end_of_a_stream_and_OnNext_is_ignored());
+
+            var creationExamples = new CreatingObservableExamples();
+            //RunExample(() => creationExamples.Blocking_vs_NonBlocking_via_Observable_Create());
+            //RunExample(() => creationExamples.NonBlocking_event_driven());
+            //RunExample(() => creationExamples.Use_Generate_to_make_Range());
+            //RunExample(() => creationExamples.Sync_ReadFile());
+            //RunExample(() => creationExamples.APM_ReadFile());
+            //RunExample(() => creationExamples.APM_WithRx_FileRead());
+            //RunExample(() => creationExamples.ToObservable_from_TaskT());
+            //RunExample(() => creationExamples.ToObservable_from_TaskT_late_start());
+
+            var filtering = new FilteringExamples();
+            //RunExample(() => filtering.Where());
+            //RunExample(() => filtering.Distinct_will_only_serve_a_value_once());
+            //RunExample(() => filtering.DistinctUntilChanged_can_serve_the_same_value_more_than_once());
+            //RunExample(() => filtering.IgnoreElements());
+            //RunExample(() => filtering.Skip());
+            //RunExample(() => filtering.Take());
+            //RunExample(() => filtering.SkipWhile());
+            //RunExample(() => filtering.TakeWhile());
+            //RunExample(() => filtering.SkipLast());
+            //RunExample(() => filtering.TakeLast());
+            //RunExample(() => filtering.SkipUntil());
+            //RunExample(() => filtering.TakeUntil());
+
+            var inspection = new Inspection();
+            //RunExample(() => inspection.Any_with_a_value());
+            //RunExample(() => inspection.Any_without_a_value());
+            //RunExample(() => inspection.Any_with_an_error());
+            //RunExample(() => inspection.Any_with_a_value_then_error());
+            //RunExample(() => inspection.All_with_values());
+            //RunExample(() => inspection.All_without_a_value());
+            //RunExample(() => inspection.All_with_failing_values());
+            //RunExample(() => inspection.All_with_an_error());
+            //RunExample(() => inspection.IsEmpty_is_just_Any_false());
+            //RunExample(() => inspection.Contains_with_value());
+            //RunExample(() => inspection.DefaultIfEmpty_is_a_noop_if_there_are_values());
+            //RunExample(() => inspection.DefaultIfEmpty_returns_Default_T_if_empty());
+            //RunExample(() => inspection.ElementAt1());
+            //RunExample(() => inspection.ElementAt1_is_Skip1Take1());
+            //RunExample(() => inspection.ElementAtLengthPlus1());
+            //RunExample(() => inspection.ElementAtOrDefault());
+            //RunExample(() => inspection.SequenceEqual());
+
+            var aggregation = new AggregationExamples();
+            //RunExample(() => aggregation.Count());
+            //RunExample(() => aggregation.LongCount());
+            //RunExample(() => aggregation.MinAndAverage());
+            //RunExample(() => aggregation.Min_on_null_custom_type());
+            //RunExample(() => aggregation.Aggregate_as_Min());
+            //RunExample(() => aggregation.First_and_BehaviorSubject());
+            //RunExample(() => aggregation.Single());
+            //RunExample(() => aggregation.SingleOrDefault());
+            //RunExample(() => aggregation.Aggregate_with_one_value());
+            //RunExample(() => aggregation.Aggregate_as_Sum());
+            //RunExample(() => aggregation.Aggregate_with_empty_sequence_throws());
+            //RunExample(() => aggregation.Aggregate_seed_with_empty_sequence_returns_seed());
+            //RunExample(() => aggregation.Aggregate_as_Median());
+            //RunExample(() => aggregation.Scan());
+            //RunExample(() => aggregation.Scan_and_Distinct_for_runningMin());
+
+            var transformation = new TransformationExamples();
+            //RunExample(() => transformation.Simple_SelectMany_to_expand());
+            //RunExample(() => transformation.SelectMany_to_expand_with_multivalues());
+            //RunExample(() => transformation.SelectMany_to_char());
+            //RunExample(() => transformation.SelectMany_to_char_with_filter());
+            //RunExample(() => transformation.SelectMany_to_make_where());
+            //RunExample(() => transformation.SelectMany_to_make_Skip());
+            //RunExample(() => transformation.SelectMany_to_make_Take());
+            //RunExample(() => transformation.Cast_takes_objects_to_T());
+            //RunExample(() => transformation.Cast_fails_on_invalid_cast());
+            //RunExample(() => transformation.OfType_takes_objects_to_T_safely());
+            //RunExample(() => transformation.TimeStamp());
+            //RunExample(() => transformation.TimeInterval());
+            //RunExample(() => transformation.TimeInterval_with_StringBuilder());
+            //RunExample(() => transformation.TimeInterval_with_StringBuilder_and_OwnThread());
+            //RunExample(() => transformation.Materialize_OnCompleted());
+            //RunExample(() => transformation.Materialize_OnError());
+            //RunExample(() => transformation.Dematerialize_OnCompleted());
+
+            var sideeffects = new SideEffectsExamples();
+            //RunExample(() => sideeffects.Simple_count_side_effect());
+            //RunExample(() => sideeffects.Simple_count_side_effect_with_2nd_subscription());
+            //RunExample(() => sideeffects.Simple_count_side_effect_free());
+            //RunExample(() => sideeffects.Do_For_logging_SideEffects());
+            //RunExample(() => sideeffects.Do_for_logging_in_a_pipeline());
+            RunExample(() => sideeffects.AsObservable_missing_allowing_sabotage());
+            RunExample(() => sideeffects.AsObservable_protects_encapsulation());
+            RunExample(() => sideeffects.Mutable_elements_cant_be_protected());
+            
+
+            //var leavingTheMonad = new LeavingTheMonadExamples();
+            //RunExample(() => leavingTheMonad.ForEach_is_Blocking());
+            //RunExample(() => leavingTheMonad.Subscribe_is_not_Blocking());
+            //RunExample(() => leavingTheMonad.ForEach_with_TryCatch());
+
             //RunExample(() => extMethodExamples.Defer_to_make_a_blocking_non_blocking_like_Observable_Create());
             //RunExample(() => extMethodExamples.Range_is_like_Create_that_returns_a_range_of_integers());
-            //RunExample(() => extMethodExamples.Inveral_example());
+            //RunExample(() => extMethodExamples.Interval_example());
             //RunExample(() => extMethodExamples.Interval_for_evenly_spaced_publications());
             //RunExample(() => extMethodExamples.Start_using_Action_overload());
             //RunExample(() => extMethodExamples.Start_using_Func_overload());
@@ -51,11 +162,8 @@ namespace RxSamples.ConsoleApp
             //RunExample(() => extMethodExamples.Throttle_wont_publish_values_if_they_are_produced_faster_than_the_throttle_period());
             //RunExample(() => extMethodExamples.Throttle_is_only_useful_for_when_time_between_publications_is_variable());
 
-            var lifetimeExample = new LifetimeManagementExamples();
-            //RunExample(() => lifetimeExample.Dispose_of_a_subscription_to_unsubscribe());
-            //RunExample(() => lifetimeExample.Multiple_subscriptions_to_the_same_interval_are_actually_independent_streams());
-            //RunExample(() => lifetimeExample.OnCompleted_signifies_the_end_of_a_stream_and_OnNext_is_ignored());
-            //RunExample(() => lifetimeExample.OnError_signifies_the_end_of_a_stream_and_OnNext_is_ignored());
+
+
 
             var flowControl = new FlowControlExamples();
             //RunExample(() => flowControl.Simple_Subscribe_will_rethrow_Errors());

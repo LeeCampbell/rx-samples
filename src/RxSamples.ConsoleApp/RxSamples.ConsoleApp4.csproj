@@ -44,16 +44,23 @@
   <ItemGroup>
     <Compile Include="01_SubjectExamples.cs" />
     <Compile Include="02_StaticAndExtensionMethodsExamples.cs" />
+    <Compile Include="03_CreatingObservableExamples.cs" />
     <Compile Include="03_LifetimeManagementExamples.cs" />
-    <Compile Include="04_FlowControlExamples.cs" />
+    <Compile Include="04_FilteringExamples.cs" />
     <Compile Include="05_CombiningObservableExamples.cs" />
+    <Compile Include="05_Inspection.cs" />
+    <Compile Include="06_AggregationExamples.cs" />
     <Compile Include="06_SchedulingExamples.cs" />
     <Compile Include="07_HotAndColdExamples.cs" />
+    <Compile Include="07_Transformation.cs" />
+    <Compile Include="08_FlowControlExamples.cs" />
+    <Compile Include="08_SideEffectsExamples.cs" />
     <Compile Include="08_TestingRx\IMyService.cs" />
     <Compile Include="08_TestingRx\ISchedulerProvider.cs" />
     <Compile Include="08_TestingRx\IViewModel.cs" />
     <Compile Include="08_TestingRx\MyPresenter.cs" />
     <Compile Include="09_JoinGroupWindowExamples.cs" />
+    <Compile Include="09_LeavingTheMonadExamples.cs" />
     <Compile Include="ConsoleColor.cs" />
     <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />
