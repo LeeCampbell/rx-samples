@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Reactive;
+using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -12,6 +12,64 @@ namespace RxSamples.ConsoleApp
 {
     class JoinGroupWindowExamples : ExamplesBase
     {
+        #region new ones for the book
+
+        public void GroupBy()
+        {
+            var source = new Subject<string>();
+            var groups = source.GroupBy(element => element.FirstOrDefault());
+            groups.Subscribe(
+                grp => grp.Subscribe(i => Console.WriteLine("{0}:{1}", grp.Key, i)),
+                () => Console.WriteLine("Completed"));
+
+            source.OnNext("Alan");
+            source.OnNext("Alex");
+            source.OnNext("Barry");
+            source.OnNext("Charlie");
+            source.OnNext("Craig");
+            source.OnNext("Dave");
+            source.OnNext("Andrew");
+        }
+
+        public void MinBy()
+        {
+            var source = new Subject<string>();
+            var groups = source.MinBy(element => element.FirstOrDefault());
+            groups.Subscribe(
+                grp => grp.ToList().ForEach(Console.WriteLine),
+                () => Console.WriteLine("Completed"));
+
+            source.OnNext("Alan");
+            source.OnNext("Alex");
+            source.OnNext("Barry");
+            source.OnNext("Charlie");
+            source.OnNext("Craig");
+            source.OnNext("Dave");
+            source.OnNext("Andrew");
+            source.OnCompleted();
+        }
+
+        public void MaxBy()
+        {
+            var source = new Subject<string>();
+            var groups = source.MaxBy(element => element.FirstOrDefault());
+            groups.Subscribe(
+                grp => grp.ToList().ForEach(Console.WriteLine),
+                () => Console.WriteLine("Completed"));
+
+            source.OnNext("Alan");
+            source.OnNext("Alex");
+            source.OnNext("Barry");
+            source.OnNext("Charlie");
+            source.OnNext("Craig");
+            source.OnNext("Dave");
+            source.OnNext("Andrew");
+            source.OnCompleted();
+        }
+        #endregion
+
+
+
         public void Buffer_With_Count_returns_IObservable_of_IList_of_T()
         {
             var bufferIdx = 0;

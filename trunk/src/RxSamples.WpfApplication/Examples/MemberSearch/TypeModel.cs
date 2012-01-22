@@ -3,6 +3,9 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Runtime.ExceptionServices;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace RxSamples.WpfApplication.Examples.MemberSearch
 {
@@ -17,12 +20,11 @@ namespace RxSamples.WpfApplication.Examples.MemberSearch
         public TypeModel(ITypeService typeService)
         {
             _typeService = typeService;
-
+            
             var propChanged = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                handler => new PropertyChangedEventHandler(handler),
+                handler => handler.Invoke,
                 h => this.PropertyChanged += h,
                 h => this.PropertyChanged -= h);
-
 
             propChanged
                 .Select(ev => ev.EventArgs.PropertyName)
