@@ -121,15 +121,78 @@ namespace RxSamples.ConsoleApp
             //RunExample(() => sideeffects.Simple_count_side_effect_free());
             //RunExample(() => sideeffects.Do_For_logging_SideEffects());
             //RunExample(() => sideeffects.Do_for_logging_in_a_pipeline());
-            RunExample(() => sideeffects.AsObservable_missing_allowing_sabotage());
-            RunExample(() => sideeffects.AsObservable_protects_encapsulation());
-            RunExample(() => sideeffects.Mutable_elements_cant_be_protected());
-            
+            //RunExample(() => sideeffects.AsObservable_missing_allowing_sabotage());
+            //RunExample(() => sideeffects.AsObservable_protects_encapsulation());
+            //RunExample(() => sideeffects.Mutable_elements_cant_be_protected());
 
-            //var leavingTheMonad = new LeavingTheMonadExamples();
+
+            var leavingTheMonad = new LeavingTheMonadExamples();
             //RunExample(() => leavingTheMonad.ForEach_is_Blocking());
             //RunExample(() => leavingTheMonad.Subscribe_is_not_Blocking());
             //RunExample(() => leavingTheMonad.ForEach_with_TryCatch());
+            //RunExample(() => leavingTheMonad.Slow_consumer_spike());
+            //RunExample(() => leavingTheMonad.Slow_Enumerable_consumer_spike());
+            //RunExample(() => leavingTheMonad.ToEnumerable_Subscribes_immediately());
+            //RunExample(() => leavingTheMonad.ToEnumerable_caches_and_then_blocks_when_cache_drained());
+            //RunExample(() => leavingTheMonad.ToEnumerable_OnError());
+            //RunExample(() => leavingTheMonad.ToArray_caches_all_values_then_notifies_the_whole_array());
+            //RunExample(() => leavingTheMonad.ToArray_OnError());
+            //RunExample(() => leavingTheMonad.ToList_caches_all_values_then_notifies_the_whole_array());
+            //RunExample(() => leavingTheMonad.ToList_OnError());
+            //RunExample(() => leavingTheMonad.ToDictionary_caches_all_values_then_notifies_the_whole_dictionary());
+            //RunExample(() => leavingTheMonad.ToDictionary_OnError());
+            //RunExample(() => leavingTheMonad.ToDictionary_throws_on_duplicate_keys());
+            //RunExample(() => leavingTheMonad.ToLookup_caches_all_values_then_notifies_the_whole_lookup());
+            //RunExample(() => leavingTheMonad.ToLookup_OnError());
+            //RunExample(() => leavingTheMonad.Latest_result_will_cache_the_last_Notification());
+            //RunExample(() => leavingTheMonad.MostRecent_result_has_a_default_value_and_never_blocks());
+            //RunExample(() => leavingTheMonad.Next_result_will_block_on_MoveNext_until_source_notifies());
+            //RunExample(() => leavingTheMonad.Next_can_lose_Error());
+            //RunExample(() => leavingTheMonad.ToTask_returns_the_last_value_on_completion());
+            //RunExample(() => leavingTheMonad.ToTask_OnError());
+            //RunExample(() => leavingTheMonad.ToEvent());
+            //RunExample(() => leavingTheMonad.ToEvent_OnError());
+
+            var flowControl = new FlowControlExamples();
+            //RunExample(() => flowControl.Catch_to_swallow_exceptions());
+            //RunExample(() => flowControl.Catch_to_swallow_specific_exceptions());
+            //RunExample(() => flowControl.Catch_to_ignore_wrong_exception_type());
+            //RunExample(()=>flowControl.Finally_OnCompleted());
+            //RunExample(()=>flowControl.Finally_OnError());
+            //RunExample(() => flowControl.Finally_dispose_subscription());
+            //RunExample(()=>flowControl.Finally_OnError_No_handler());
+            //RunExample(()=>flowControl.Custom_Finally_OnComplete());
+            //RunExample(()=>flowControl.Custom_Finally_OnError());
+            //RunExample(()=>flowControl.Custom_Finally_OnError_No_handler());
+            //RunExample(()=>flowControl.Custom_Finally_dispose_Subscription());
+            //RunExample(()=>flowControl.Normal_using_keyword());
+            //RunExample(() => flowControl.RxUsing_to_bind_resource_lifetime_to_subscription_lifetime());
+            //RunExample(() => flowControl.Simple_Subscribe_will_rethrow_Errors());
+            //RunExample(() => flowControl.Retry_will_retry_on_error_forever());
+            //RunExample(() => flowControl.Retry_will_retry_on_error_forever_MyFix());
+            //RunExample(() => flowControl.Retry_with_Schedule_in_create());
+            //RunExample(() => flowControl.Retry_with_argument_of_2_will_retry_once());
+            //RunExample(() => flowControl.OnErrorResumeNext_will_try_another_stream_OnError());
+            //RunExample(() => flowControl.Catch_is_the_same_as_OnErrorResumeNext_when_no_error_type_is_specified());
+            //RunExample(() => flowControl.Catch_will_try_another_stream_on_a_specific_exception());
+            //RunExample(() => flowControl.Catch_will_OnError_if_OnError_not_the_specific_exception());
+            //RunExample(() => flowControl.Do_allows_side_effect_free_access_to_streams());
+            //RunExample(() => flowControl.Materialize_Dematerialize_and_Do_for_logging());
+            //RunExample(() => flowControl.Run_subscribes_to_all_values_and_blocks());
+
+            var combineExamples = new CombineExamples();
+            //RunExample(()=>combineExamples.Concat_continues_with_second_sequence());
+            //RunExample(()=>combineExamples.Repeat_continues_with_self());
+            //RunExample(()=>combineExamples.StartWith_allows_values_to_be_prepended_to_a_sequence());
+            //RunExample(()=>combineExamples.Amb_will_return_values_from_the_first_sequence_to_produce_values());
+            //RunExample(()=>combineExamples.Search_With_merge());
+            //RunExample(() => combineExamples.CombineLatest());
+            //RunExample(() => combineExamples.Zip_example());
+            //RunExample(() => combineExamples.Zip_with_skip1());
+            //RunExample(() => combineExamples.Basic_AndThenWhen_is_just_zip());
+            //RunExample(() => combineExamples.ZipZip());
+            //RunExample(() => combineExamples.AndAndThenWhen_is_ZipZip());
+            RunExample(() => combineExamples.Composite_AndThenWhen());
 
             //RunExample(() => extMethodExamples.Defer_to_make_a_blocking_non_blocking_like_Observable_Create());
             //RunExample(() => extMethodExamples.Range_is_like_Create_that_returns_a_range_of_integers());
@@ -165,17 +228,6 @@ namespace RxSamples.ConsoleApp
 
 
 
-            var flowControl = new FlowControlExamples();
-            //RunExample(() => flowControl.Simple_Subscribe_will_rethrow_Errors());
-            //RunExample(() => flowControl.Retry_will_retry_on_error_forever());
-            //RunExample(() => flowControl.Retry_with_argument_of_2_will_retry_once());
-            //RunExample(() => flowControl.OnErrorResumeNext_will_try_another_stream_OnError());
-            //RunExample(() => flowControl.Catch_is_the_same_as_OnErrorResumeNext_when_no_error_type_is_specified());
-            //RunExample(() => flowControl.Catch_will_try_another_stream_on_a_specific_exception());
-            //RunExample(() => flowControl.Catch_will_OnError_if_OnError_not_the_specific_exception());
-            //RunExample(() => flowControl.Do_allows_side_effect_free_access_to_streams());
-            //RunExample(() => flowControl.Materialize_Dematerialize_and_Do_for_logging());
-            //RunExample(() => flowControl.Run_subscribes_to_all_values_and_blocks());
 
             var combine = new CombiningObservableExamples();
             //RunExample(() => combine.ConcatSample());
