@@ -37,7 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Reactive">
+    <Reference Include="System.Reactive, Version=1.0.10621.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Rx-Main.1.0.11226\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -53,7 +53,6 @@
     <Compile Include="06_SchedulingExamples.cs" />
     <Compile Include="07_HotAndColdExamples.cs" />
     <Compile Include="07_Transformation.cs" />
-    <Compile Include="08_FlowControlExamples.cs" />
     <Compile Include="08_SideEffectsExamples.cs" />
     <Compile Include="08_TestingRx\IMyService.cs" />
     <Compile Include="08_TestingRx\ISchedulerProvider.cs" />
@@ -61,6 +60,8 @@
     <Compile Include="08_TestingRx\MyPresenter.cs" />
     <Compile Include="09_JoinGroupWindowExamples.cs" />
     <Compile Include="09_LeavingTheMonadExamples.cs" />
+    <Compile Include="10_FlowControlExamples.cs" />
+    <Compile Include="11_CombineExamples.cs" />
     <Compile Include="ConsoleColor.cs" />
     <Compile Include="EnumerableExamples.cs" />
     <Compile Include="ExamplesBase.cs" />
